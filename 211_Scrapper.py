@@ -16,19 +16,22 @@ while True:
        
         if "Next >" in tree.xpath('//*[@id="paginationControl"]/span/text()'):
                 break
- 
+        name = "211_corpus_" + str(page_number) + " .html"
+        file = open(name, "w")
         page_number += 1
        
-file = open("211_corpus.html", "w")
- 
+
+page_number = 1
 for link in links:
         url = root_url + link
         service = requests.get(url)
         service_tree = html.fromstring(service.text)
         name = service_tree.xpath('//*[@id="profile"]/tbody/tr[1]/td/table/tbody/tr/td[2]/h2/text()')[0]
         description = service_tree.xpath('//*[@id="profile_data"]/tbody/tr[5]/td[2]/text()')[0]
-       
+        name = "211_corpus_" + str(page_number) + ".html"
+        file = open(name, "w")
         summary = "<h1>" + name + "</h1><p>" + description + " - " + url + "</p>\n"
         file.write(summary)
-       
+        page_number += 1
+
 print("Done!")
